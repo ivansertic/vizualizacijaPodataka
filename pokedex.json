@@ -1,5 +1,4 @@
-[
- {
+[{
    "Number": 1,
    "Name": "Bulbasaur",
    "Type 1": "Grass",
@@ -2263,5 +2262,4 @@
    "Speed": 100,
    "Generation": 1,
    "Legendary": false
- }
-]
+  }]

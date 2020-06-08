@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Pokedex</title>
+</head>
+
+<body>
+    <script>
+        d3.json("pokedex.json").then(function (data) {
+
+            for (let i = 0; i < data.length; i+=3) {
+                if(i == data.length || i > data.length){
+                    break;
+                }
+                if(i == 150){
+                    showLast(data[i]);
+                }else{
+                    showPictures(data[i],data[i+1],data[i+2]);
+                }
+            }
+        })
+
+        function showPictures(data1, data2, data3) {
+            let divContainer = d3.select("body")
+                .append("div")
+                .attr("class","container");
+            let divRow = divContainer.insert("div")
+                .attr("class","row");
+            let image1 = divRow.insert("div")
+                .attr("class","col-md-4");        
+            image1.insert("img")
+                .attr("src", "/pokemonImages/" + data1.Name.toLowerCase() + ".png");
+            image2=divRow.insert("div")
+                .attr("class","col-md-4");
+            image2.append("img")
+                .attr("src", "/pokemonImages/" + data2.Name.toLowerCase() + ".png");
+            image3 = divRow.insert("div")
+                .attr("class","col-md-4");
+            image3.append("img")
+                .attr("src", "/pokemonImages/" + data3.Name.toLowerCase() + ".png");     
+                
+        }
+
+        function showLast(data){
+            let image = d3.select("body")
+                .append("div")
+                .attr("class","container");
+            image = image.insert("div")
+                .attr("class","row");
+            image = image.insert("div")
+                .attr("class","col-md-4");        
+            image.append("img")
+                .attr("src", "/pokemonImages/" + data.Name.toLowerCase() + ".png");
+        }
+
+    </script>
+</body>
+
+</html>
