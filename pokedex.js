@@ -1,4 +1,4 @@
-[{
+var pokedex = [{
    "Number": 1,
    "Name": "Bulbasaur",
    "Type 1": "Grass",

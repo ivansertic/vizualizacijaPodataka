@@ -6,56 +6,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="pokedex.js"></script>
     <title>Pokedex</title>
 </head>
 
 <body>
     <script>
-        d3.json("pokedex.json").then(function (data) {
+        let data = pokedex;
+        let info = d3
+            .select('body')
+            .append('div')
+            .style('position', 'absolute')
+            .style('z-index', '10')
+            .style('visibility', 'hidden');
 
-            for (let i = 0; i < data.length; i+=3) {
-                if(i == data.length || i > data.length){
-                    break;
-                }
-                if(i == 150){
-                    showLast(data[i]);
-                }else{
-                    showPictures(data[i],data[i+1],data[i+2]);
-                }
+        for (let i = 0; i < data.length; i += 3) {
+            if (i == data.length || i > data.length) {
+                break;
             }
-        })
+            if (i == 150) {
+                showLast(data[i]);
+            } else {
+                showPictures(data[i], data[i + 1], data[i + 2]);
+            }
+        }
 
         function showPictures(data1, data2, data3) {
             let divContainer = d3.select("body")
                 .append("div")
-                .attr("class","container");
+                .attr("class", "container");
             let divRow = divContainer.insert("div")
-                .attr("class","row");
+                .attr("class", "row col-md-12");
             let image1 = divRow.insert("div")
-                .attr("class","col-md-4");        
-            image1.insert("img")
-                .attr("src", "/pokemonImages/" + data1.Name.toLowerCase() + ".png");
-            image2=divRow.insert("div")
-                .attr("class","col-md-4");
-            image2.append("img")
-                .attr("src", "/pokemonImages/" + data2.Name.toLowerCase() + ".png");
-            image3 = divRow.insert("div")
-                .attr("class","col-md-4");
-            image3.append("img")
-                .attr("src", "/pokemonImages/" + data3.Name.toLowerCase() + ".png");     
-                
+                .attr("class", "col-md-4");
+            image1 = image1.insert("div").attr("align", "center")
+            let imSvg = image1.insert("svg").attr("width", "120").attr("height", "120");
+            imSvg.insert("image").attr('xlink:href', "/pokemonImages/" + data1.Name.toLowerCase() + ".png");
+            image1.insert("br");
+            image1.insert("text").text(data1.Name);
+
+            imSvg.on("click", function () {
+                return info
+                    .style('visibility', 'visible')
+                    .style('top', event.pageY + 'px')
+                    .style('left', event.pageX + 'px')
+                    .text(data1.Name + ', Test ' + data1.Name);
+            })
+
+
+            let image2 = divRow.insert("div")
+                .attr("class", "col-md-4");
+            image2 = image2.insert("div").attr("align", "center");
+            let imSvg2 = image2.insert("svg").attr("width", "120").attr("height", "120");
+            imSvg2.insert("image")
+                .attr('xlink:href', "/pokemonImages/" + data2.Name.toLowerCase() + ".png");
+            image2.insert("br");
+            image2.insert("text").text(data2.Name);
+
+            imSvg2.on("click", function () {
+                return info
+                    .style('visibility', 'visible')
+                    .style('top', event.pageY + 'px')
+                    .style('left', event.pageX + 'px')
+                    .text(data2.Name + ', Test ' + data2.Name);
+            })
+
+            let image3 = divRow.insert("div")
+                .attr("class", "col-md-4");
+            image3 = image3.insert("div").attr("align", "center");
+            let imSvg3 = image3.insert("svg").attr("width", "120").attr("height", "120");
+            imSvg3.insert("image")
+                .attr('xlink:href', "/pokemonImages/" + data3.Name.toLowerCase() + ".png");
+            image3.insert("br");
+            image3.insert("text").text(data3.Name);
+
+            imSvg3.on("click", function () {
+                return info
+                    .style('visibility', 'visible')
+                    .style('top', event.pageY + 'px')
+                    .style('left', event.pageX + 'px')
+                    .text(data3.Name + ', Test ' + data3.Name);
+            })
+
         }
 
-        function showLast(data){
+        function showLast(data) {
             let image = d3.select("body")
                 .append("div")
-                .attr("class","container");
+                .attr("class", "container");
             image = image.insert("div")
-                .attr("class","row");
+                .attr("class", "row");
             image = image.insert("div")
-                .attr("class","col-md-4");        
-            image.append("img")
-                .attr("src", "/pokemonImages/" + data.Name.toLowerCase() + ".png");
+                .attr("class", "col-md-4");
+            image = image.insert("div").attr("align", "center");
+            let imgSvg = image.insert("svg").attr("width", "120").attr("height", "120");
+            imgSvg.insert("image")
+                .attr('xlink:href', "/pokemonImages/" + data.Name.toLowerCase() + ".png");
+            image.insert("br");
+            image.insert("text").text(data.Name);
+
+            imgSvg.on("click", function () {
+                return info
+                    .style('visibility', 'visible')
+                    .style('top', event.pageY + 'px')
+                    .style('left', event.pageX + 'px')
+                    .text(data.Name + ', Test ' + data.Name);
+            })
         }
 
     </script>
