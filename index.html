@@ -47,7 +47,6 @@
                 data1WFeatures[f] = data1[f]
             });
 
-            //console.log(data1WFeatures);
             let divContainer = d3.select("body")
                 .append("div")
                 .attr("class", "container");
@@ -70,6 +69,11 @@
             })
 
 
+            let data2WFeatures = {};
+            spiderChardFetures.forEach(f=>{
+                data2WFeatures[f] = data2[f]
+            });
+
             let image2 = divRow.insert("div")
                 .attr("class", "col-md-4");
             image2 = image2.insert("div").attr("align", "center");
@@ -80,12 +84,17 @@
             image2.insert("text").text(data2.Name);
 
             imSvg2.on("click", function () {
+                plotTheData(data2WFeatures);
                 return info
                     .style('visibility', 'visible')
                     .style('top', event.pageY + 'px')
                     .style('left', event.pageX + 'px')
-                    .text(data2.Name + ', Test ' + data2.Name);
             })
+
+            let data3WFeatures = {};
+            spiderChardFetures.forEach(f=>{
+                data3WFeatures[f] = data3[f]
+            });
 
             let image3 = divRow.insert("div")
                 .attr("class", "col-md-4");
@@ -97,6 +106,7 @@
             image3.insert("text").text(data3.Name);
 
             imSvg3.on("click", function () {
+                plotTheData(data3WFeatures);
                 return info
                     .style('visibility', 'visible')
                     .style('top', event.pageY + 'px')
