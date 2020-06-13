@@ -15,7 +15,7 @@
         let data = pokedex;
         let spiderChardFetures = ["HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed"];
         let radialScale = d3.scaleLinear()
-                .domain([0, 280])
+                .domain([0, 250])
                 .range([0, 140]);
         let info = d3
             .select('body')
@@ -61,11 +61,11 @@
             image1.insert("text").text(data1.Name);
 
             imSvg.on("click", function () {
-                plotTheData(data1WFeatures);
+                plotTheData(data1WFeatures,data1.Name);
                 return info
                     .style('visibility', 'visible')
-                    .style('top', event.pageY + 'px')
-                    .style('left', event.pageX + 'px')
+                    .style('top', (event.pageY-60) + 'px')
+                    .style('left', 100 + 'px')
             })
 
 
@@ -84,11 +84,11 @@
             image2.insert("text").text(data2.Name);
 
             imSvg2.on("click", function () {
-                plotTheData(data2WFeatures);
+                plotTheData(data2WFeatures,data2.Name);
                 return info
                     .style('visibility', 'visible')
-                    .style('top', event.pageY + 'px')
-                    .style('left', event.pageX + 'px')
+                    .style('top', (event.pageY-60)+ 'px')
+                    .style('left', 100 + 'px')
             })
 
             let data3WFeatures = {};
@@ -106,11 +106,11 @@
             image3.insert("text").text(data3.Name);
 
             imSvg3.on("click", function () {
-                plotTheData(data3WFeatures);
+                plotTheData(data3WFeatures,data3.Name);
                 return info
                     .style('visibility', 'visible')
-                    .style('top', event.pageY + 'px')
-                    .style('left', event.pageX + 'px')
+                    .style('top', (event.pageY-60) + 'px')
+                    .style('left', 100+ 'px')
             })
 
         }
@@ -138,18 +138,18 @@
             image.insert("text").text(data.Name);
 
             imgSvg.on("click", function () {
-                plotTheData(dataWFeatures);
+                plotTheData(dataWFeatures,data.Name);
                 return info
                     .style('visibility', 'visible')
-                    .style('top', event.pageY + 'px')
-                    .style('left', event.pageX + 'px')
+                    .style('top', (event.pageY-60) + 'px')
+                    .style('left', 100 + 'px')
             })
         }
 
         function makeSpiderChart(svgInfo) {
             console.log("pozvao si me")
 
-            let marks = [56, 112, 178, 224, 280];
+            let marks = [50, 100, 150, 200, 250];
 
             marks.forEach(m =>
                 svgInfo.insert("circle")
@@ -171,8 +171,8 @@
                 let name = spiderChardFetures[i];
                 let angle = (Math.PI / 2) + (2 * Math.PI * i / spiderChardFetures.length);
 
-                let line_coordinate = angleToCoordinates(angle, 280, radialScale);
-                let label_coordinate = angleToCoordinates(angle, 240, radialScale);
+                let line_coordinate = angleToCoordinates(angle, 250, radialScale);
+                let label_coordinate = angleToCoordinates(angle, 170, radialScale);
 
                 svgInfo.append("line")
                     .attr("x1", 150)
@@ -184,6 +184,7 @@
                 svgInfo.append("text")
                     .attr("x", label_coordinate.x)
                     .attr("y", label_coordinate.y)
+                    .attr("fill","red")
                     .text(name);
             }
 
@@ -218,6 +219,13 @@
                 .x(d => d.x)
                 .y(d => d.y);
 
+            svgInDiv.append("text")
+                .attr("id","pokeName")
+                .attr("x",130)
+                .attr("y",290)
+                .text("")
+                .attr("fill","blue")  
+                    
             let color = "darkorange";
             svgInDiv.append("path")  
                 .datum(initial)
@@ -230,7 +238,7 @@
                 .attr("opacity", 0.5);
         }
 
-        function plotTheData(data) {
+        function plotTheData(data,name) {
 
             let line = d3.line()
                 .x(d => d.x)
@@ -241,6 +249,9 @@
 
             console.log(coordinates);
             var svg = d3.select("body").transition();
+
+            svg.select("#pokeName")
+                .text(name);
 
             svg.select("#svgid")
                 .attr("d",line(coordinates))
