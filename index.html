@@ -13,6 +13,10 @@
 <body>
     <script>
         let data = pokedex;
+        let spiderChardFetures = ["HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed"];
+        let radialScale = d3.scaleLinear()
+                .domain([0, 280])
+                .range([0, 140]);
         let info = d3
             .select('body')
             .append('div')
@@ -38,6 +42,12 @@
         }
 
         function showPictures(data1, data2, data3) {
+            let data1WFeatures = {};
+            spiderChardFetures.forEach(f=>{
+                data1WFeatures[f] = data1[f]
+            });
+
+            //console.log(data1WFeatures);
             let divContainer = d3.select("body")
                 .append("div")
                 .attr("class", "container");
@@ -52,11 +62,11 @@
             image1.insert("text").text(data1.Name);
 
             imSvg.on("click", function () {
+                plotTheData(data1WFeatures);
                 return info
                     .style('visibility', 'visible')
                     .style('top', event.pageY + 'px')
                     .style('left', event.pageX + 'px')
-                    .text(data1.Name + ', Test ' + data1.Name);
             })
 
 
@@ -97,6 +107,12 @@
 
         function showLast(data) {
             //makeSpiderChart(data);
+            let dataWFeatures = {};
+            spiderChardFetures.forEach(f => {
+                dataWFeatures[f] = data[f]
+            });
+
+            console.log(dataWFeatures);
             let image = d3.select("body")
                 .append("div")
                 .attr("class", "container");
@@ -112,6 +128,7 @@
             image.insert("text").text(data.Name);
 
             imgSvg.on("click", function () {
+                plotTheData(dataWFeatures);
                 return info
                     .style('visibility', 'visible')
                     .style('top', event.pageY + 'px')
@@ -121,13 +138,8 @@
 
         function makeSpiderChart(svgInfo) {
             console.log("pozvao si me")
-            let spiderChardFetures = ["HP", "Attack", "Defense", "Sp.Atk", "Sp.Def", "Speed"];
 
-            let radialScale = d3.scaleLinear()
-                .domain([0, 10])
-                .range([0, 200]);
-
-            let marks = [1, 2, 3, 4, 5];
+            let marks = [56, 112, 178, 224, 280];
 
             marks.forEach(m =>
                 svgInfo.insert("circle")
@@ -138,19 +150,19 @@
                     .attr("r", radialScale(m))
             );
 
-            marks.forEach(m=>{
+            marks.forEach(m => {
                 svgInfo.append("text")
-                .attr("x", 155)
-                .attr("y", 150 - radialScale(m))
-                .text((m*40).toString())
+                    .attr("x", 155)
+                    .attr("y", 150 - radialScale(m))
+                    .text((m).toString())
             })
 
             for (var i = 0; i < spiderChardFetures.length; i++) {
                 let name = spiderChardFetures[i];
                 let angle = (Math.PI / 2) + (2 * Math.PI * i / spiderChardFetures.length);
 
-                let line_coordinate = angleToCoordinates(angle, 5,radialScale);
-                let label_coordinate = angleToCoordinates(angle, 5.5,radialScale);
+                let line_coordinate = angleToCoordinates(angle, 280, radialScale);
+                let label_coordinate = angleToCoordinates(angle, 240, radialScale);
 
                 svgInfo.append("line")
                     .attr("x1", 150)
@@ -164,9 +176,77 @@
                     .attr("y", label_coordinate.y)
                     .text(name);
             }
+
+            let initial = [
+                {
+                    x: 0,
+                    y: 0
+                },
+                {
+                    x: 0,
+                    y: 0
+                },
+                {
+                    x: 0,
+                    y: 0
+                },
+                {
+                    x: 0,
+                    y: 0
+                },
+                {
+                    x: 0,
+                    y: 0
+                },
+                {
+                    x: 0,
+                    y: 0
+                }
+            ]
+
+            let line = d3.line()
+                .x(d => d.x)
+                .y(d => d.y);
+
+            let color = "darkorange";
+            svgInDiv.append("path")  
+                .datum(initial)
+                .attr("id","svgid")
+                .attr("d", line)
+                .attr("stroke-width", 3)
+                .attr("stroke", color)
+                .attr("fill", color)
+                .attr("stroke-opacity", 1)
+                .attr("opacity", 0.5);
         }
 
-        function angleToCoordinates(angle, value,radialScale) {
+        function plotTheData(data) {
+
+            let line = d3.line()
+                .x(d => d.x)
+                .y(d => d.y);
+
+            let color = "darkorange";
+            let coordinates = getPathCoordinates(data);
+
+            console.log(coordinates);
+            var svg = d3.select("body").transition();
+
+            svg.select("#svgid")
+                .attr("d",line(coordinates))
+        }
+
+        function getPathCoordinates(data_point) {
+            let coordinates = [];
+            for (var i = 0; i < spiderChardFetures.length; i++) {
+                let ft_name = spiderChardFetures[i];
+                let angle = (Math.PI / 2) + (2 * Math.PI * i / spiderChardFetures.length);
+                coordinates.push(angleToCoordinates(angle, data_point[ft_name]));
+            }
+            return coordinates;
+        }
+
+        function angleToCoordinates(angle, value) {
             let x = Math.cos(angle) * radialScale(value);
             let y = Math.sin(angle) * radialScale(value);
             return { "x": 150 + x, "y": 150 - y };
