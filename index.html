@@ -20,6 +20,12 @@
             .style('z-index', '10')
             .style('visibility', 'hidden');
 
+        let svgInDiv = info.insert("svg")
+            .attr("width", 300)
+            .attr("height", 300);
+
+
+        makeSpiderChart(svgInDiv);
         for (let i = 0; i < data.length; i += 3) {
             if (i == data.length || i > data.length) {
                 break;
@@ -85,12 +91,12 @@
                     .style('visibility', 'visible')
                     .style('top', event.pageY + 'px')
                     .style('left', event.pageX + 'px')
-                    .text(data3.Name + ', Test ' + data3.Name);
             })
 
         }
 
         function showLast(data) {
+            //makeSpiderChart(data);
             let image = d3.select("body")
                 .append("div")
                 .attr("class", "container");
@@ -110,8 +116,60 @@
                     .style('visibility', 'visible')
                     .style('top', event.pageY + 'px')
                     .style('left', event.pageX + 'px')
-                    .text(data.Name + ', Test ' + data.Name);
             })
+        }
+
+        function makeSpiderChart(svgInfo) {
+            console.log("pozvao si me")
+            let spiderChardFetures = ["HP", "Attack", "Defense", "Sp.Atk", "Sp.Def", "Speed"];
+
+            let radialScale = d3.scaleLinear()
+                .domain([0, 10])
+                .range([0, 200]);
+
+            let marks = [1, 2, 3, 4, 5];
+
+            marks.forEach(m =>
+                svgInfo.insert("circle")
+                    .attr("cx", 150)
+                    .attr("cy", 150)
+                    .attr("fill", "none")
+                    .attr("stroke", "gray")
+                    .attr("r", radialScale(m))
+            );
+
+            marks.forEach(m=>{
+                svgInfo.append("text")
+                .attr("x", 155)
+                .attr("y", 150 - radialScale(m))
+                .text((m*40).toString())
+            })
+
+            for (var i = 0; i < spiderChardFetures.length; i++) {
+                let name = spiderChardFetures[i];
+                let angle = (Math.PI / 2) + (2 * Math.PI * i / spiderChardFetures.length);
+
+                let line_coordinate = angleToCoordinates(angle, 5,radialScale);
+                let label_coordinate = angleToCoordinates(angle, 5.5,radialScale);
+
+                svgInfo.append("line")
+                    .attr("x1", 150)
+                    .attr("y1", 150)
+                    .attr("x2", line_coordinate.x)
+                    .attr("y2", line_coordinate.y)
+                    .attr("stroke", "black");
+
+                svgInfo.append("text")
+                    .attr("x", label_coordinate.x)
+                    .attr("y", label_coordinate.y)
+                    .text(name);
+            }
+        }
+
+        function angleToCoordinates(angle, value,radialScale) {
+            let x = Math.cos(angle) * radialScale(value);
+            let y = Math.sin(angle) * radialScale(value);
+            return { "x": 150 + x, "y": 150 - y };
         }
 
     </script>
