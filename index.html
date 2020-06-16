@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Link to Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!--Link to d3.js-->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="pokedex.js"></script>
     <title>Pokedex</title>
@@ -48,6 +50,7 @@
             });
 
             let divContainer = d3.select("body")
+            //Bootstrap was used to add class to a div
                 .append("div")
                 .attr("class", "container");
             let divRow = divContainer.insert("div")
@@ -116,7 +119,6 @@
         }
 
         function showLast(data) {
-            //makeSpiderChart(data);
             let dataWFeatures = {};
             spiderChardFetures.forEach(f => {
                 dataWFeatures[f] = data[f]
