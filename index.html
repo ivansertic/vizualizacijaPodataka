@@ -56,7 +56,7 @@
                 .attr("class", "col-md-4");
             image1 = image1.insert("div").attr("align", "center")
             let imSvg = image1.insert("svg").attr("width", "120").attr("height", "120");
-            imSvg.insert("image").attr('xlink:href', "/pokemonImages/" + data1.Name.toLowerCase() + ".png");
+            imSvg.insert("image").attr('xlink:href', "./pokemonImages/" + data1.Name.toLowerCase() + ".png");
             image1.insert("br");
             image1.insert("text").text(data1.Name);
 
