@@ -17,11 +17,16 @@
         let data = pokedex;
         let spiderChardFetures = ["HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed"];
         let radialScale = d3.scaleLinear()
-                .domain([0, 250])
-                .range([0, 140]);
-        let info = d3
-            .select('body')
-            .append('div')
+            .domain([0, 250])
+            .range([0, 140]);
+        let divContainer = d3.select("body")
+            //Bootstrap was used to add class to a div
+            .append("div")
+            .attr("class", "container");
+        let divRow = divContainer.insert("div")
+            //.attr("class", "row col-md-12");
+        let info = divRow
+            .insert('div')
             .style('position', 'absolute')
             .style('z-index', '10')
             .style('visibility', 'hidden');
@@ -45,16 +50,11 @@
 
         function showPictures(data1, data2, data3) {
             let data1WFeatures = {};
-            spiderChardFetures.forEach(f=>{
+            spiderChardFetures.forEach(f => {
                 data1WFeatures[f] = data1[f]
             });
 
-            let divContainer = d3.select("body")
-            //Bootstrap was used to add class to a div
-                .append("div")
-                .attr("class", "container");
-            let divRow = divContainer.insert("div")
-                .attr("class", "row col-md-12");
+
             let image1 = divRow.insert("div")
                 .attr("class", "col-md-4");
             image1 = image1.insert("div").attr("align", "center")
@@ -64,16 +64,16 @@
             image1.insert("text").text(data1.Name);
 
             imSvg.on("click", function () {
-                plotTheData(data1WFeatures,data1.Name);
+                plotTheData(data1WFeatures, data1.Name);
                 return info
                     .style('visibility', 'visible')
-                    .style('top', (event.pageY-60) + 'px')
-                    .style('left', 100 + 'px')
+                    .style('top', (event.pageY - 60) + 'px')
+                    .style('left', 0 + 'px')
             })
 
 
             let data2WFeatures = {};
-            spiderChardFetures.forEach(f=>{
+            spiderChardFetures.forEach(f => {
                 data2WFeatures[f] = data2[f]
             });
 
@@ -87,15 +87,15 @@
             image2.insert("text").text(data2.Name);
 
             imSvg2.on("click", function () {
-                plotTheData(data2WFeatures,data2.Name);
+                plotTheData(data2WFeatures, data2.Name);
                 return info
                     .style('visibility', 'visible')
-                    .style('top', (event.pageY-60)+ 'px')
-                    .style('left', 100 + 'px')
+                    .style('top', (event.pageY - 60) + 'px')
+                    .style('left', 0+ 'px')
             })
 
             let data3WFeatures = {};
-            spiderChardFetures.forEach(f=>{
+            spiderChardFetures.forEach(f => {
                 data3WFeatures[f] = data3[f]
             });
 
@@ -109,11 +109,11 @@
             image3.insert("text").text(data3.Name);
 
             imSvg3.on("click", function () {
-                plotTheData(data3WFeatures,data3.Name);
+                plotTheData(data3WFeatures, data3.Name);
                 return info
                     .style('visibility', 'visible')
-                    .style('top', (event.pageY-60) + 'px')
-                    .style('left', 100+ 'px')
+                    .style('top', (event.pageY - 60) + 'px')
+                    .style('left', 0+ 'px')
             })
 
         }
@@ -131,7 +131,7 @@
             image = image.insert("div")
                 .attr("class", "row");
             image = image.insert("div")
-                .attr("class", "col-md-4");
+                .attr("class", "col-md-3");
             image = image.insert("div").attr("align", "center");
             let imgSvg = image.insert("svg").attr("width", "120").attr("height", "120");
             imgSvg.insert("image")
@@ -140,11 +140,11 @@
             image.insert("text").text(data.Name);
 
             imgSvg.on("click", function () {
-                plotTheData(dataWFeatures,data.Name);
+                plotTheData(dataWFeatures, data.Name);
                 return info
                     .style('visibility', 'visible')
-                    .style('top', (event.pageY-60) + 'px')
-                    .style('left', 100 + 'px')
+                    .style('top', (event.pageY - 60) + 'px')
+                    .style('left', 0+ 'px')
             })
         }
 
@@ -186,7 +186,7 @@
                 svgInfo.append("text")
                     .attr("x", label_coordinate.x)
                     .attr("y", label_coordinate.y)
-                    .attr("fill","red")
+                    .attr("fill", "red")
                     .text(name);
             }
 
@@ -222,16 +222,16 @@
                 .y(d => d.y);
 
             svgInDiv.append("text")
-                .attr("id","pokeName")
-                .attr("x",130)
-                .attr("y",290)
+                .attr("id", "pokeName")
+                .attr("x", 130)
+                .attr("y", 290)
                 .text("")
-                .attr("fill","blue")  
-                    
+                .attr("fill", "blue")
+
             let color = "darkorange";
-            svgInDiv.append("path")  
+            svgInDiv.append("path")
                 .datum(initial)
-                .attr("id","svgid")
+                .attr("id", "svgid")
                 .attr("d", line)
                 .attr("stroke-width", 3)
                 .attr("stroke", color)
@@ -240,7 +240,7 @@
                 .attr("opacity", 0.5);
         }
 
-        function plotTheData(data,name) {
+        function plotTheData(data, name) {
 
             let line = d3.line()
                 .x(d => d.x)
@@ -256,7 +256,7 @@
                 .text(name);
 
             svg.select("#svgid")
-                .attr("d",line(coordinates))
+                .attr("d", line(coordinates))
         }
 
         function getPathCoordinates(data_point) {
