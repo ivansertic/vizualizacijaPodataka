@@ -1,4 +1,0 @@
-Ukoliko se aplikacija zeli koristit lokalno to je moguce postitci:
-*Potrebno je klonirati ili preuzeti zip datoteku izvornog koda sa gita(poveznica na git racun nalazi se u dokumentaciji)
-*Potrebno je promjeniti izvor slika sa web stranice na lokalni direktorij ("/pokemonImages/")
-*Potrebno pokrenuti uze neki od servera kako bi aplikacija mogla ispravno raditi (primjer: potrebno je globalno instalirati http-server od Node.js-a pomocu iduce naredbe npm install --global http-server. Zatim se je potrebno prebaciti u korijenski direktorij projekta pomocu komandne linije i upisati http-server)
