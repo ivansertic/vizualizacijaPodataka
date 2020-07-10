@@ -18,7 +18,7 @@
         let spiderChardFetures = ["HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed"];
         let radialScale = d3.scaleLinear()
             .domain([0, 250])
-            .range([0, 140]);
+            .range([0, 75]);
         let divContainer = d3.select("body")
             //Bootstrap was used to add class to a div
             .append("div")
@@ -32,8 +32,8 @@
             .style('visibility', 'hidden');
 
         let svgInDiv = info.insert("svg")
-            .attr("width", 300)
-            .attr("height", 300);
+            .attr("width", 220)
+            .attr("height", 220);
 
 
         makeSpiderChart(svgInDiv);
@@ -155,8 +155,8 @@
 
             marks.forEach(m =>
                 svgInfo.insert("circle")
-                    .attr("cx", 150)
-                    .attr("cy", 150)
+                    .attr("cx", 100)
+                    .attr("cy", 100)
                     .attr("fill", "none")
                     .attr("stroke", "gray")
                     .attr("r", radialScale(m))
@@ -164,8 +164,8 @@
 
             marks.forEach(m => {
                 svgInfo.append("text")
-                    .attr("x", 155)
-                    .attr("y", 150 - radialScale(m))
+                    .attr("x", 105)
+                    .attr("y", 100 - radialScale(m))
                     .text((m).toString())
             })
 
@@ -174,18 +174,18 @@
                 let angle = (Math.PI / 2) + (2 * Math.PI * i / spiderChardFetures.length);
 
                 let line_coordinate = angleToCoordinates(angle, 250, radialScale);
-                let label_coordinate = angleToCoordinates(angle, 170, radialScale);
+                let label_coordinate = angleToCoordinates(angle, 280, radialScale);
 
                 svgInfo.append("line")
-                    .attr("x1", 150)
-                    .attr("y1", 150)
+                    .attr("x1", 100)
+                    .attr("y1", 100)
                     .attr("x2", line_coordinate.x)
                     .attr("y2", line_coordinate.y)
                     .attr("stroke", "black");
 
                 svgInfo.append("text")
-                    .attr("x", label_coordinate.x)
-                    .attr("y", label_coordinate.y)
+                    .attr("x", label_coordinate.x-15)
+                    .attr("y", label_coordinate.y+7)
                     .attr("fill", "red")
                     .text(name);
             }
@@ -223,8 +223,8 @@
 
             svgInDiv.append("text")
                 .attr("id", "pokeName")
-                .attr("x", 130)
-                .attr("y", 290)
+                .attr("x", 78)
+                .attr("y", 210)
                 .text("")
                 .attr("fill", "blue")
 
@@ -272,7 +272,7 @@
         function angleToCoordinates(angle, value) {
             let x = Math.cos(angle) * radialScale(value);
             let y = Math.sin(angle) * radialScale(value);
-            return { "x": 150 + x, "y": 150 - y };
+            return { "x": 100 + x, "y": 100 - y };
         }
 
     </script>
