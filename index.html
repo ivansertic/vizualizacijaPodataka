@@ -59,7 +59,7 @@
                 .attr("class", "col-md-4");
             image1 = image1.insert("div").attr("align", "center")
             let imSvg = image1.insert("svg").attr("width", "120").attr("height", "120");
-            imSvg.insert("image").attr('xlink:href', "https://ivansertic.github.io/vizualizacijaPodataka/pokemonImages/" + data1.Name.toLowerCase() + ".png");
+            imSvg.insert("image").attr('xlink:href', "./pokemonImages/" + data1.Name.toLowerCase() + ".png");
             image1.insert("br");
             image1.insert("text").text(data1.Name);
 
@@ -82,7 +82,7 @@
             image2 = image2.insert("div").attr("align", "center");
             let imSvg2 = image2.insert("svg").attr("width", "120").attr("height", "120");
             imSvg2.insert("image")
-                .attr('xlink:href', "https://ivansertic.github.io/vizualizacijaPodataka/pokemonImages/" + data2.Name.toLowerCase() + ".png");
+                .attr('xlink:href', "./pokemonImages/" + data2.Name.toLowerCase() + ".png");
             image2.insert("br");
             image2.insert("text").text(data2.Name);
 
@@ -104,7 +104,7 @@
             image3 = image3.insert("div").attr("align", "center");
             let imSvg3 = image3.insert("svg").attr("width", "120").attr("height", "120");
             imSvg3.insert("image")
-                .attr('xlink:href', "https://ivansertic.github.io/vizualizacijaPodataka/pokemonImages/" + data3.Name.toLowerCase() + ".png");
+                .attr('xlink:href', "./pokemonImages/" + data3.Name.toLowerCase() + ".png");
             image3.insert("br");
             image3.insert("text").text(data3.Name);
 
@@ -135,7 +135,7 @@
             image = image.insert("div").attr("align", "center");
             let imgSvg = image.insert("svg").attr("width", "120").attr("height", "120");
             imgSvg.insert("image")
-                .attr('xlink:href', "https://ivansertic.github.io/vizualizacijaPodataka/pokemonImages/" + data.Name.toLowerCase() + ".png");
+                .attr('xlink:href', "./pokemonImages/" + data.Name.toLowerCase() + ".png");
             image.insert("br");
             image.insert("text").text(data.Name);
 
